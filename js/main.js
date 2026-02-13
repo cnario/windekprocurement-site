@@ -445,6 +445,12 @@ function documentReadyInit() {
 	//contact form processing
 	jQuery('form.contact-form').on('submit', function( e ){
 		var $form = jQuery(this);
+
+		// If form opens in a new tab/window (target="_blank"), allow normal submission
+		// This avoids attempting an AJAX POST to external services which may fail due to CORS.
+		if ($form.attr('target') && $form.attr('target') === '_blank') {
+			return;
+		}
 		
 		// Handle formsubmit.co via AJAX
 		if ($form.attr('action') && $form.attr('action').indexOf('formsubmit.co') !== -1) {
