@@ -17,6 +17,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="icon" type="image/png" href="images/logo.png">
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css" id="color-switcher-link">
@@ -607,7 +608,7 @@
 						<div class="col-lg-6 col-md-8" id="quote-form">
 							<div class="ls with_padding footer_form">
 								<h2 class="section_header bottommargin_30 text-center">Request a Quote</h2>
-								<form class="contact-form row columns_margin_0 columns_padding_20" method="post" action="contact-form-handler.php">
+								<form id="quoteForm" class="contact-form row columns_margin_0 columns_padding_20" method="post" action="https://formsubmit.co/enquiries@windekprocurement.com" target="_blank">
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label for="name">Full Name
@@ -733,11 +734,9 @@
 					<div class="row">
 						<div class="col-sm-6 text-center">
 							<p class="bold fontsize_12 text-uppercase kanit">
-								Windek Procurement Services Limited &copy; 2025.
+								Windek Procurement Services Limited &copy; 2026.
 								<span class="black">All Rights Reserved.</span> <br>
-								<span class="hidden-xs"> Designed by
-									<a href="https://wa.me/2348037535082" class="highlight" target="_blank">CNARIO</a>
-								</span>
+								
 							</p>
 
 						</div>
@@ -752,5 +751,25 @@
 
 	<script src="js/compressed.js"></script>
 	<script src="js/main.js"></script>
+
+<script>
+// Simple submission handler: show a browser alert and then go to contact page.
+(function(){
+	var form = document.getElementById('quoteForm');
+	if(!form) return;
+
+	form.addEventListener('submit', function(e){
+		// Allow the form to submit (it opens in a new tab because of target="_blank").
+		// Show a simple alert to confirm; when user clicks OK, redirect current page.
+		setTimeout(function(){
+			try{
+				alert('Thanks — your quote request was submitted.');
+			}catch(_){ /* fallthrough */ }
+			// Redirect to contact page
+			window.location.href = 'contact_us.html';
+		}, 60);
+	});
+})();
+</script>
 
 </html>

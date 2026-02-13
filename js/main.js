@@ -444,8 +444,39 @@ function documentReadyInit() {
 
 	//contact form processing
 	jQuery('form.contact-form').on('submit', function( e ){
-		e.preventDefault();
 		var $form = jQuery(this);
+		
+		// Handle formsubmit.co via AJAX
+		if ($form.attr('action') && $form.attr('action').indexOf('formsubmit.co') !== -1) {
+			e.preventDefault();
+			var $submitButton = $form.find('[type="submit"]');
+			var originalButtonText = $submitButton.html();
+			$submitButton.attr('disabled', true).html('Sending...');
+			var actionUrl = $form.attr('action').replace('formsubmit.co/', 'formsubmit.co/ajax/');
+
+			jQuery.ajax({
+				url: actionUrl,
+				method: 'POST',
+				data: $form.serialize(),
+				dataType: 'json',
+				success: function(data) {
+					$submitButton.attr('disabled', false).html(originalButtonText);
+					$form[0].reset();
+					jQuery('#successModal').modal('show');
+				},
+				error: function(err) {
+					$submitButton.attr('disabled', false).html(originalButtonText);
+					alert('There was an error sending your message. Please try again later.');
+				}
+			});
+			return;
+		}
+
+		// Allow standard submission for external actions (like formsubmit.co)
+		if ($form.attr('action').indexOf('http') === 0) {
+			return;
+		}
+		e.preventDefault();
 		jQuery($form).find('span.contact-form-respond').remove();
 
 		//checking on empty values
@@ -461,7 +492,7 @@ function documentReadyInit() {
 
 		//sending form data to PHP server if fields are not empty
 		var request = $form.serialize();
-		var ajax = jQuery.post( "contact-form.php", request )
+		var ajax = jQuery.post( $form.attr('action'), request )
 		.done(function( data ) {
 			jQuery($form).find('[type="submit"]').attr('disabled', false).parent().append('<span class="contact-form-respond highlight">'+data+'</span>');
 			//cleaning form

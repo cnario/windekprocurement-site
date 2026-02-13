@@ -17,6 +17,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="icon" type="image/png" href="images/logo.png">
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css" id="color-switcher-link">
@@ -179,7 +180,7 @@
 								will respond promptly.
 							</p>
 
-							<form class="contact-form row columns_padding_20 columns_margin_0" method="post" action="#">
+							<form id="contactForm" class="contact-form row columns_padding_20 columns_margin_0" method="post" action="https://formsubmit.co/enquiries@windekprocurement.com" target="_blank">
 
 								<div class="col-sm-6">
 									<div class="form-group">
@@ -301,11 +302,9 @@
 					<div class="row">
 						<div class="col-sm-6 text-center">
 							<p class="bold fontsize_12 text-uppercase kanit">
-								Windek Procurement Services Limited &copy; 2025.
+								Windek Procurement Services Limited &copy; 2026.
 								<span class="black">All Rights Reserved.</span> <br>
-								<span class="hidden-xs"> Designed by
-									<a href="https://wa.me/2348037535082" class="highlight" target="_blank">CNARIO</a>
-								</span>
+								
 							</p>
 
 						</div>
@@ -320,6 +319,21 @@
 
 	<script src="js/compressed.js"></script>
 	<script src="js/main.js"></script>
+
+<script>
+// Simple confirmation on submit, then redirect back to contact page
+(function(){
+	var form = document.getElementById('contactForm');
+	if(!form) return;
+	form.addEventListener('submit', function(e){
+		// allow the POST to open in a new tab (target="_blank")
+		setTimeout(function(){
+			try{ alert('Thanks — your message was sent.'); }catch(_){}
+			window.location.href = 'contact_us.html';
+		}, 60);
+	});
+})();
+</script>
 
 </body>
 </html>
